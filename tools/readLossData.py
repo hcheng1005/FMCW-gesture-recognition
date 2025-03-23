@@ -9,21 +9,21 @@ def visualize_stats(losses):
 
     axs[0].plot(indices, [train_loss for train_loss, _, _ in losses])  # 绘制训练损失  
     axs[0].set_title('Train loss')  # 设置标题  
-    axs[0].set_xlabel('Epoch')  # 设置x轴标签  
+    # axs[0].set_xlabel('Epoch')  # 设置x轴标签  
     axs[0].set_ylabel('Loss')  # 设置y轴标签  
     axs[0].grid(axis='y', linewidth=0.4)  # 添加网格  
     axs[0].set(frame_on=False)  # 关闭框架  
 
     axs[1].plot(indices, [val_loss for _, val_loss, _ in losses])  # 绘制验证损失  
     axs[1].set_title('Validation loss')  # 设置标题  
-    axs[1].set_xlabel('Epoch')  # 设置x轴标签  
+    # axs[1].set_xlabel('Epoch')  # 设置x轴标签  
     axs[1].set_ylabel('Loss')  # 设置y轴标签  
     axs[1].grid(axis='y', linewidth=0.4)  # 添加网格  
     axs[1].set(frame_on=False)  # 关闭框架  
 
     axs[2].plot(indices, [acc * 100 for _, _, acc in losses])  # 绘制验证准确率  
     axs[2].set_title('Validation accuracy')  # 设置标题  
-    axs[2].set_xlabel('Epoch')  # 设置x轴标签  
+    # axs[2].set_xlabel('Epoch')  # 设置x轴标签  
     axs[2].set_ylabel('Accuracy (%)')  # 设置y轴标签  
     axs[2].grid(axis='y', linewidth=0.4)  # 添加网格  
     axs[2].set(frame_on=False)  # 关闭框架  

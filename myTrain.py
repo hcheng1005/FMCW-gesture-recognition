@@ -180,32 +180,36 @@ def collate_func(batch):
 
 
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # 设置设备为GPU或CPU  
-
-# 确保可重复性  
-torch.manual_seed(123)  # 设置PyTorch的随机种子  
-np.random.seed(123)  # 设置NumPy的随机种子  
-random.seed(123)  # 设置Python内置random模块的随机种子  
 
 
-# 初始化手势数据集  
-dataset = GestureDataset2()  
-# 将数据集随机分为训练集和验证集，比例为70%和30%  
-train_dataset, val_dataset = random_split(dataset, [0.7, 0.3])  
 
-# 创建数据加载器，设置批量大小和是否打乱数据  
-train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True, collate_fn=collate_func)  
-val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True, collate_fn=collate_func)  
+if __name__ == "__main__":   
+    
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # 设置设备为GPU或CPU  
 
-# 可视化样本（注释掉的代码）  
-# visualize_sample(dataset)  
+    # 确保可重复性  
+    torch.manual_seed(123)  # 设置PyTorch的随机种子  
+    np.random.seed(123)  # 设置NumPy的随机种子  
+    random.seed(123)  # 设置Python内置random模块的随机种子  
 
-# 运行训练过程，并将损失记录为列表  
-losses = list(run_training(train_loader, val_loader, dataset.class_mapper, 100))  
+    # 初始化手势数据集  
+    dataset = GestureDataset2()  
+    # 将数据集随机分为训练集和验证集，比例为70%和30%  
+    train_dataset, val_dataset = random_split(dataset, [0.7, 0.3])  
 
-# 使用二进制写入方式保存训练数据便于后续查看
-with open("losses_data.pkl", "wb") as f:  
-    pickle.dump(losses, f)  
+    # 创建数据加载器，设置批量大小和是否打乱数据  
+    train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True, collate_fn=collate_func)  
+    val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True, collate_fn=collate_func)  
 
-# # 可视化训练和验证的统计信息  
-# visualize_stats(losses)
+    # 可视化样本（注释掉的代码）  
+    # visualize_sample(dataset)  
+
+    # 运行训练过程，并将损失记录为列表  
+    losses = list(run_training(train_loader, val_loader, dataset.class_mapper, num_epochs=32))  
+
+    # 使用二进制写入方式保存训练数据便于后续查看
+    with open("losses_data.pkl", "wb") as f:  
+        pickle.dump(losses, f)  
+
+    # # 可视化训练和验证的统计信息  
+    # visualize_stats(losses)

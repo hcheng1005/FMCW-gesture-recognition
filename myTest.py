@@ -103,21 +103,20 @@ val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True, collate_fn=col
 model = GestureNet(num_input_channels=3, num_classes=12)
 
 # 加载权重文件
-checkpoint = torch.load("/home/charles/Code/FMCW-gesture-recognition/pth/trained_model_pre-train_12cl_100ep.pt", 
+checkpoint = torch.load("/home/charles/Code/FMCW-gesture-recognition/pth/trained_model_pre-train_12cl_32ep.pt", 
                         map_location=torch.device("cuda"),
                         weights_only=True)  
 
 model.load_state_dict(checkpoint['model_state_dict'])  
 model.eval()
-model.to(device)  # 将模型移动到设备  
-
+model.to(device)  # 将模型移动到指定设备  
 
 loss_func = torch.nn.CrossEntropyLoss()  # 损失函数  
 
 val_loss, accuracy, labels, predictions = validate_model(model, val_loader, loss_func, device)  # 验证模型  
-print('\n', val_loss, accuracy)  # 打印损失和准确率 
+# print('\n', val_loss, accuracy)  # 打印损失和准确率 
 
-cm = confusion_matrix(labels, predictions, normalize='all')  # 计算混淆矩阵  
+cm = confusion_matrix(labels, predictions, normalize='true')  # 计算混淆矩阵  
 disp = ConfusionMatrixDisplay(cm, display_labels=dataset.class_mapper.classes_).plot(xticks_rotation=45)  # 显示混淆矩阵 
 disp.plot()
 plt.show()
